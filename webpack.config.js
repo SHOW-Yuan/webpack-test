@@ -1,9 +1,10 @@
 const path = require('path');
+const { webpack, HotModuleReplacementPlugin } = require('webpack');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     // 指定编译模式
-    mode: 'production',
+    mode: 'development',
     // 指定编译入口文件
     entry: './src/appAdmin.js',
     // 指定编译输出文件
@@ -29,9 +30,14 @@ module.exports = {
     },
     // 插件用于文件的优化 资源管理和环境变量注入 
     // 作用于整个构建过程
-    // plugins: [
-    //     new HtmlWebpackPlugin({
-    //         template: './src/index.html'
-    //     })
-    // ]
+    plugins: [
+        // new HtmlWebpackPlugin({
+        //     template: './src/index.html'
+        // }),
+        new HotModuleReplacementPlugin()
+    ],
+    devServer: {
+        static: './dist',
+        hot: true
+    }
 }
