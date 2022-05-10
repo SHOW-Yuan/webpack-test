@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
-    "build": "webpack",
-    "dev": "webpack serve --open"
+    "build": "webpack --config webpack.prod.js",
+    "dev": "webpack serve --config webpack.dev.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
     "@babel/preset-react": "^7.16.7",
     "babel-loader": "^8.2.5",
     "css-loader": "^5.2.7",
+    "mini-css-extract-plugin": "^1.6.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "style-loader": "^2.0.0",
@@ -28,6 +29,10 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
+    "cssnano": "^5.1.7",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^4.5.2",
+    "optimize-css-assets-webpack-plugin": "^6.0.1",
     "webpack-dev-server": "^4.9.0"
   }
 }
