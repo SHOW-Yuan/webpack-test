@@ -3,6 +3,7 @@ const { webpack, HotModuleReplacementPlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetplugin = require('optimize-css-assets-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     // 指定编译模式
@@ -26,7 +27,17 @@ module.exports = {
                 use: [
                     // MiniCssExtractPlugin不能和style-loader一起使用
                     MiniCssExtractPlugin.loader,
-                    'css-loader'
+                    'css-loader',
+                    'postcss-loader',
+                    {
+                        loader: 'px2rem-loader',
+                        options: {
+                            // 1rem等于多少px（此时相对应750的设计稿 每1rem=75px
+                            remUnit: 75,
+                            // 小数点后保留多少位
+                            remPrecision: 8
+                        }
+                    }
                 ]
             },
             {
@@ -63,5 +74,6 @@ module.exports = {
         }),
         new OptimizeCSSAssetplugin(),
         new HotModuleReplacementPlugin(),
+        new CleanWebpackPlugin(),
     ]
 }

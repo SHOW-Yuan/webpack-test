@@ -1,6 +1,7 @@
 const path = require('path');
 const { webpack, HotModuleReplacementPlugin } = require('webpack');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     // 指定编译模式
@@ -43,7 +44,8 @@ module.exports = {
         // new HtmlWebpackPlugin({
         //     template: './src/index.html'
         // }),
-        new HotModuleReplacementPlugin()
+        new HotModuleReplacementPlugin(),
+        new CleanWebpackPlugin(),
     ],
     devServer: {
         static: './dist',

@@ -9,6 +9,8 @@ class Rct extends React.Component {
         return (
             <div>
                 { hello() }
+                <span>这个是标题</span>
+                <span>设置fixe布局</span>
             </div>
         )
     }
