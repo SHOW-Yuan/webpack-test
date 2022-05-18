@@ -1,15 +1,55 @@
 const path = require('path');
+const glob = require('glob');
+
 const { webpack, HotModuleReplacementPlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetplugin = require('optimize-css-assets-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+const setMPA = () => {
+    const entry = {};
+    const htmlWebpackPlugins = [];
+
+    const entryFiles = glob.sync(path.resolve(__dirname, './src/modules/*/index.js'));
+    Object.keys(entryFiles).map( i => {
+        const entryFile = entryFiles[i];
+
+        // 获取html文件名
+        const match = entryFile.match(/src\/modules\/(.*)\/index\.js/);
+        const pageName = match && match[1];
+
+        entry[pageName] = entryFile;
+        htmlWebpackPlugins.push(
+            new HtmlWebpackPlugin({
+                template: path.resolve(__dirname, `./src/modules/${pageName}/index.html`),
+                filename: `${pageName}.html`,
+                inject: true,
+                minify: {
+                  html5: true,
+                  collapseWhitespace: true,
+                  preserveLineBreaks: false,
+                  minifyCSS: true,
+                  minifyJS: true,
+                  removeComments: false
+                }
+            })
+        )
+    })
+
+    return {
+        entry,
+        htmlWebpackPlugins
+    }
+}
+
+const { entry, htmlWebpackPlugins } = setMPA();
+
 module.exports = {
     // 指定编译模式
     mode: 'production',
     // 指定编译入口文件
-    entry: './src/appAdmin.js',
+    entry,
     // 指定编译输出文件
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -55,19 +95,7 @@ module.exports = {
     // 作用于整个构建过程
     plugins: [
         // 压缩html文件
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, './src/index.html'),
-            filename: 'index.html',
-            inject: true,
-            minify: {
-              html5: true,
-              collapseWhitespace: true,
-              preserveLineBreaks: false,
-              minifyCSS: true,
-              minifyJS: true,
-              removeComments: false
-            }
-        }),
+        ...htmlWebpackPlugins,
         // 创建css hash文件名
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash:8].css'

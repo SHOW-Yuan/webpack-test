@@ -34,6 +34,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "cssnano": "^5.1.7",
     "file-loader": "^6.2.0",
+    "glob": "^6.0.4",
     "html-webpack-plugin": "^4.5.2",
     "lib-flexible": "^0.3.2",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
