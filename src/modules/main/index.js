@@ -6,6 +6,7 @@ import './app.css';
 
 class Rct extends React.Component {
     render(){
+        a = 1
         return (
             <div>
                 { hello() }
