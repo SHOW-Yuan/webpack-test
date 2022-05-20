@@ -1,4 +1,7 @@
 import { hello } from '../main/hello';
+// 不会被打包
+import { helloA } from './hello';
+const test1 = '早上好'
 
 document.write(hello());
 
